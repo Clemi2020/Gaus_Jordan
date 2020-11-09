@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,13 +35,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void openInputActivity(){
-        int cols = Integer.parseInt(matrix_cols.getText().toString());
-        int rows = Integer.parseInt(matrix_rows.getText().toString());
-        Intent intent = new Intent(this, MatrixActivity.class);
+        try {
+            int cols = Integer.parseInt(matrix_cols.getText().toString());
+            int rows = Integer.parseInt(matrix_rows.getText().toString());
+            Intent intent = new Intent(this, MatrixActivity.class);
 
-        intent.putExtra(EXTRA_COLS,cols);
-        intent.putExtra(EXTRA_ROWS,rows);
+            intent.putExtra(EXTRA_COLS,cols);
+            intent.putExtra(EXTRA_ROWS,rows);
 
-        startActivity(intent);
+            startActivity(intent);
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),"Du musst schon Zahlen eingeben....",Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
