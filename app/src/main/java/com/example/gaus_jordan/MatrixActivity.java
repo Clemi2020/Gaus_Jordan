@@ -114,7 +114,7 @@ public class MatrixActivity extends AppCompatActivity {
         param.rowSpec = GridLayout.spec(row);
         param.columnSpec = GridLayout.spec(column);
         editText.setLayoutParams(param);
-        editText.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
+        editText.setKeyListener(DigitsKeyListener.getInstance("0123456789.-"));
         editText.setSingleLine();
     }
 }
