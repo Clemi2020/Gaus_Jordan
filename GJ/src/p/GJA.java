@@ -1,6 +1,8 @@
 package p;
 
 import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Die Klasse GJA dient zur Lösung von linearen Gleichungssystemen (LGS).
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 
 public class GJA {
 	public String trace = "";
-
+	int acc = 2;
 	/**
 	 * Fügt der Trace Tabelle Text hinzu.
 	 * 
@@ -48,9 +50,9 @@ public class GJA {
 		for (int i = 0; i < m.length; i++) {
 			addTrace((i + 1) + ". (");
 			for (int k = 0; k < (m[0].length - 1); k++) {
-				addTrace(" " + m[i][k]);
+				addTrace(" " + round(m[i][k], acc));
 			}
-			addTrace(" |" + m[i][(m[0].length - 1)] + ")");
+			addTrace(" |" + round(m[i][(m[0].length - 1)], acc) + ")");
 			addTrace("\n");
 		}
 	}
@@ -91,6 +93,15 @@ public class GJA {
 		return -1;
 	}
 
+	public static double round(double value, int places) {
+		if (places < 0)
+			throw new IllegalArgumentException();
+
+		BigDecimal bd = BigDecimal.valueOf(value);
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		return bd.doubleValue();
+	}
+
 	/**
 	 * Normiert eine Zeile einer EKM.
 	 *
@@ -100,9 +111,10 @@ public class GJA {
 	 */
 
 	public double[] normZeile(double[] mz, boolean r) {
+		double d;
 		double nfak = 1 / mz[getOrd(mz, r)]; // Faktor
 		for (int i = 0; i < mz.length; i++) {
-			mz[i] *= nfak;
+			mz[i] = round((mz[i] * nfak), acc);
 		}
 		return mz;
 	}
@@ -162,8 +174,19 @@ public class GJA {
 	private boolean checkWidRaw(double[][] m) {
 		int h = m.length;
 		int b = m[0].length - 1;
+		double[] n = new double[m[0].length];
 
 		for (int i = 0; i < h; i++) { // i = Zeilen-Idx
+			if (checkGleich(m[i], n, (b - 1)) && !checkGleich(m[i], n, b)) {
+				// Trace Start
+				addTraceL();
+				addTraceNl("Widerspruch erkannt!");
+				addTraceNl("Zeile " + (i + 1) + "!");
+				addTraceEKM(m);
+				addTraceL();
+				// Trace Ende
+				return true;
+			}
 			for (int k = (i + 1); k < h; k++) { // k = Zeilen-Idx nach i
 				if (checkGleich(m[i], m[k], (b - 1))) {
 					if (m[i][b] != m[k][b]) {
@@ -207,9 +230,6 @@ public class GJA {
 	 */
 
 	public double[][] entfDoppel(double[][] m) {
-		m = normMatrix(m, true);
-		m = sortMatrix(m);
-
 		ArrayList<double[]> mList = new ArrayList<double[]>();
 		int h = m.length;
 		int b = m[0].length - 1;
@@ -227,7 +247,9 @@ public class GJA {
 				mList.add(m[i]);
 			}
 		}
-
+		if (h == mList.size()) {
+			mList.remove(mList.size() - 1);
+		}
 		double[][] res = new double[mList.size()][m[0].length];
 		for (int i = 0; i < mList.size(); i++) {
 			res[i] = mList.get(i);
@@ -235,8 +257,8 @@ public class GJA {
 
 		// Trace Start
 		addTraceL();
-		addTraceNl("Doppelte Zeilen entfernt");
-		addTraceEKM(m);
+		addTraceNl("Zeile entfernt");
+		addTraceEKM(res);
 		addTraceL();
 		// Trace Ende
 
@@ -306,21 +328,33 @@ public class GJA {
 	 */
 
 	public double[][] kombMatrix(double[][] m, int idx, boolean r) {
-		addTraceL(); // Trace
-		addTraceNl("Zeilen Kombiniert"); // Trace
+		String t = "";
+		boolean p = false;
 		if (r) {
 			for (int i = idx + 1; i < m.length; i++) {
-				m[i] = kombZeilen(m[idx], m[i]);
-				addTraceNl((i + 1) + ". Zeile = " + (i + 1) + ". Zeile - " + (idx + 1) + ". Zeile"); // Trace
+				if (m[i][idx] != 0) {
+					m[i] = kombZeilen(m[idx], m[i]);
+					t += ((i + 1) + ". Zeile = " + (i + 1) + ". Zeile - " + (idx + 1) + ". Zeile\n");
+					p = true;
+				}
+
 			}
 		} else {
 			for (int i = idx - 1; i >= 0; i--) {
-				m[i] = kombZeilen(m[idx], m[i]);
-				addTraceNl((i + 1) + ". Zeile = " + (i + 1) + ". Zeile - " + (idx + 1) + ". Zeile"); // Trace
+				if (m[i][idx] != 0) {
+					m[i] = kombZeilen(m[idx], m[i]);
+					t += ((i + 1) + ". Zeile = " + (i + 1) + ". Zeile - " + (idx + 1) + ". Zeile\n");
+					p = true;
+				}
 			}
 		}
-		addTraceEKM(m); // Trace
-		addTraceL(); // Trace
+		if (p) {
+			addTraceL(); // Trace
+			addTraceNl("Zeilen Kombiniert"); // Trace
+			addTrace(t);
+			addTraceEKM(m); // Trace
+			addTraceL(); // Trace
+		}
 		return m;
 	}
 
@@ -428,6 +462,7 @@ public class GJA {
 			addTraceL();
 			addTraceNl("EKM ist unterbestimmt!");
 			addTraceEKM(m);
+			addTraceL();
 			addTraceNl("Algorithmus Ende");
 			addTraceL();
 			// Trace Ende
@@ -468,23 +503,32 @@ public class GJA {
 		addTraceL();
 		// Trace Ende
 
-		if (checkUebEKM(m)) { // Fall Überbestimmt
-			m = entfDoppel(m);
-		}
-
-		while (!checkTri(m)) {
+		while (true) {
 			m = entfNZ(m); // Entferne Nullzeilen
+			if (checkUebEKM(m)) {
+				m = entfDoppel(m);
+				if (checkTri(m)) {
+					break;
+				}
+			}
 			if (checkUntEKM(m)) { // Fall Unterbestimmt
+				return null;
+			}
+			if (checkWidRaw(m)) { // Fall Widerspruch
 				return null;
 			}
 			m = normMatrix(m, true); // Normiere
 			m = sortMatrix(m); // Sortiere
-
-			if (checkWidRaw(m)) { // Fall Widerspruch
-				return null;
+			if (checkTri(m)) {
+				break;
 			}
 			m = kombMatrix(m, idx, true);
-			idx++;
+			if (idx == (m.length - 1)) {
+				idx = 0;
+			} else {
+				idx++;
+			}
+
 		}
 		// Trace Start
 		addTraceL();
@@ -512,12 +556,22 @@ public class GJA {
 			addTraceEKM(m);
 			addTraceL();
 			// Trace Ende
-			int idx = m[0].length - 2;
+
+			int idx = m.length - 1;
 			while (!checkDiag(m)) {
+				if (checkWidRaw(m)) { // Fall Widerspruch
+					return null;
+				}
 				m = normMatrix(m, false);
 				m = kombMatrix(m, idx, false);
-				idx--;
+				if (idx < 0) {
+					idx = m.length - 1;
+				} else {
+					idx--;
+				}
+
 			}
+
 			// Trace Start
 			addTraceL();
 			addTraceNl("Jordan-Algorithmus Ende");
