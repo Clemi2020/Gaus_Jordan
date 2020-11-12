@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="146dp"
-        android:text="Zeilen:" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -24,32 +15,79 @@
         android:layout_marginTop="205dp"
         android:text="Weiter" />
 
-    <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="166dp"
-        android:ems="10"
-        android:inputType="number" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="217dp"
+        android:layout_below="@+id/textView4"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="40dp"
+        android:layout_toEndOf="@+id/textView"
         android:text="Spalten:" />
 
     <EditText
-        android:id="@+id/editTextNumber2"
+        android:id="@+id/editTextNumber"
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="20dp"
+        android:textSize="32dp"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="245dp"
-        android:ems="10"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="40dp"
+        android:text="Zeilen:" />
+
+    <EditText
+        android:id="@+id/editTextNumber2"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/textView5"
+        android:textSize="32dp"
         android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="384dp"
+        android:layout_height="46dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:text="Ich löse für dich das LGS mit Hilfe von dem Gauß-Jordan Algorithmus!" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="95dp"
+        android:text="Größe der Matrix:" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="23dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="30dp"
+        android:layout_toEndOf="@+id/editTextNumber"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:text="X"
+        android:textSize="32dp" />
 </RelativeLayout>

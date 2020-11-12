@@ -2,7 +2,6 @@ package com.example.gaus_jordan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,17 +34,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void openInputActivity(){
+        Intent intent = new Intent(this, MatrixActivity.class);
         try {
             int cols = Integer.parseInt(matrix_cols.getText().toString());
             int rows = Integer.parseInt(matrix_rows.getText().toString());
-            Intent intent = new Intent(this, MatrixActivity.class);
 
-            intent.putExtra(EXTRA_COLS,cols);
-            intent.putExtra(EXTRA_ROWS,rows);
+            if (cols > 8 || rows > 8){
+                Toast.makeText(getApplicationContext(),"Bruh, viel zu groß die Matrix....",Toast.LENGTH_SHORT).show();
+            }else {
+                intent.putExtra(EXTRA_COLS, cols);
+                intent.putExtra(EXTRA_ROWS, rows);
 
-            startActivity(intent);
+                startActivity(intent);
+            }
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),"Du musst schon Zahlen eingeben....",Toast.LENGTH_SHORT).show();
+
+            startActivity(intent);
         }
 
     }
