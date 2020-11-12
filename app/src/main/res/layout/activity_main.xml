@@ -65,7 +65,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:text="Ich löse für dich das LGS mithilfe von dem Gauß-Jordan Algorithmus!" />
+        android:text="Ich löse für dich das LGS mit Hilfe von dem Gauß-Jordan Algorithmus!" />
 
     <TextView
         android:id="@+id/textView4"

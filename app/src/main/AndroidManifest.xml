@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gaus_Jordan">
-        <activity android:name=".MatrixActivity"
+        <activity android:name="com.example.gaus_jordan.MatrixActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".MainActivity"
+            android:parentActivityName="com.example.gaus_jordan.MainActivity"></activity>
+        <activity android:name="com.example.gaus_jordan.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
