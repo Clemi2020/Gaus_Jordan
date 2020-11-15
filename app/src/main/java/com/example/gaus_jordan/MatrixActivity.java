@@ -1,9 +1,13 @@
 package com.example.gaus_jordan;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.fonts.Font;
 import android.graphics.fonts.FontStyle;
+import android.inputmethodservice.InputMethodService;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.method.DigitsKeyListener;
@@ -13,6 +17,8 @@ import android.util.SizeF;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowAnimationFrameStats;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -21,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.transition.Transition;
 
 public class MatrixActivity extends AppCompatActivity {
 
@@ -36,9 +43,11 @@ public class MatrixActivity extends AppCompatActivity {
     private TextView some_text;
     private int ID_MATRIX_START = 0;
     private int ID_MATRIX_SOLVED_START = 300;
+    private int DISP_WIDTH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matrix);
         Intent intent = getIntent();
@@ -48,18 +57,22 @@ public class MatrixActivity extends AppCompatActivity {
         gridLayoutMatrix = findViewById(R.id.matrix_input);
         gridLayoutMatrixSolved = findViewById(R.id.matrix_output);
         display_text = findViewById(R.id.textView6);
+
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        DISP_WIDTH = size.x;
+
         scrollView = findViewById(R.id.scrollview);
         some_text = findViewById(R.id.text_some);
-
         createMatrixLayout(gridLayoutMatrix, ID_MATRIX_START);
         createMatrixSolvedLayout(gridLayoutMatrixSolved, ID_MATRIX_SOLVED_START);
-
 
         button_calc = findViewById(R.id.button_calculate);
         button_showtheway = findViewById(R.id.button_rechenweg);
         button_calc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(),0);
                 gridLayoutMatrixSolved.setVisibility(View.INVISIBLE);
                 scrollView.setVisibility(View.INVISIBLE);
                 do_GJA();
@@ -114,17 +127,18 @@ public class MatrixActivity extends AppCompatActivity {
     //putting the edit text according to row and column index
     private void setPos(EditText editText, GridLayout gridLayout, int row, int column, int cols, int rows) {
         GridLayout.LayoutParams param =new GridLayout.LayoutParams();
-        param.width = gridLayout.getLayoutParams().width / cols;
+        param.width = DISP_WIDTH / cols;
         param.height = gridLayout.getLayoutParams().height / rows;;
         param.setGravity(Gravity.CENTER);
         param.rowSpec = GridLayout.spec(row);
         param.columnSpec = GridLayout.spec(column);
         editText.setLayoutParams(param);
+
     }
     //putting the edit text according to row and column index
     private void setPos(TextView editText, GridLayout gridLayout, int row, int column, int cols, int rows) {
         GridLayout.LayoutParams param =new GridLayout.LayoutParams();
-        param.width = gridLayout.getLayoutParams().width / cols;
+        param.width = DISP_WIDTH / cols;
         param.height = gridLayout.getLayoutParams().height / rows;;
         param.setGravity(Gravity.CENTER);
         param.rowSpec = GridLayout.spec(row);
@@ -147,13 +161,15 @@ public class MatrixActivity extends AppCompatActivity {
                 editTexts[i][j].setText(Integer.toString(counter));
                 editTexts[i][j].setKeyListener(DigitsKeyListener.getInstance("0123456789.-"));
                 editTexts[i][j].setSingleLine();
-                editTexts[i][j].setTextColor(Color.BLACK);
-                setPos(editTexts[i][j], gridLayoutMatrix, i, j, colNum, rowNum);
-                gridLayoutMatrix.addView(editTexts[i][j]);
+                editTexts[i][j].setGravity(Gravity.CENTER);
 
+                setPos(editTexts[i][j], gridLayoutMatrix, i, j, colNum, rowNum);
                 if (j == colNum-1){
                     editTexts[i][j].setBackgroundColor(Color.LTGRAY);
+                    editTexts[i][j].setTextColor(Color.BLACK);
                 }
+
+                gridLayoutMatrix.addView(editTexts[i][j]);
             }
         }
     }
@@ -171,12 +187,14 @@ public class MatrixActivity extends AppCompatActivity {
             for (int j = 0; j < colNum; j++) {
                 editTexts[i][j] = new TextView(this);
                 editTexts[i][j].setId(counter++);
-                editTexts[i][j].setTextColor(Color.BLACK);
+
                 editTexts[i][j].setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                setPos(editTexts[i][j], gridLayoutMatrix, i, j, colNum, rowNum);
+                editTexts[i][j].setGravity(Gravity.CENTER);
+                setPos(editTexts[i][j], gridLayoutMatrix, i, j, colNum, max_rows);
                 gridLayoutMatrix.addView(editTexts[i][j]);
 
                 if (j == colNum-1){
+                    editTexts[i][j].setTextColor(Color.BLACK);
                     editTexts[i][j].setBackgroundColor(Color.LTGRAY);
                 }
             }
@@ -193,7 +211,7 @@ public class MatrixActivity extends AppCompatActivity {
         for (int i = 0; i < max_rows; i++) {
             for (int j = 0; j < colNum; j++) {
                 TextView editText_Matrix = findViewById(counter);
-                editText_Matrix.setText(Double.toString(matrix_solved[i][j]));
+                editText_Matrix.setText(String.format("%1.3f",matrix_solved[i][j]));
                 counter++;
             }
         }

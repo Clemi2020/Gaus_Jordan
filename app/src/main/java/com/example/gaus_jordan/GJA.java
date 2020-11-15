@@ -1,14 +1,14 @@
-package p;
+package com.example.gaus_jordan;
 
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Die Klasse GJA dient zur Lösung von linearen Gleichungssystemen (LGS).
+ * Die Klasse GJA dient zur Lï¿½sung von linearen Gleichungssystemen (LGS).
  * 
- * Dazu stellt die Klasse Funktionen zur Durchführung des Gauß-Algorithmus und
- * des Gauß-Jordan-Algorithmus sowie weitere Hilfsfunktionen bereit.
+ * Dazu stellt die Klasse Funktionen zur Durchfï¿½hrung des Gauï¿½-Algorithmus und
+ * des Gauï¿½-Jordan-Algorithmus sowie weitere Hilfsfunktionen bereit.
  * 
  * Alle Funktionen verwenden erweiterte Koeffizientenmatrizen (EKM).
  * 
@@ -22,9 +22,9 @@ public class GJA {
 	int acc = 2;
 
 	/**
-	 * Fügt der Trace Tabelle Text hinzu.
+	 * Fï¿½gt der Trace Tabelle Text hinzu.
 	 * 
-	 * @param z Zeile für Trace Tabelle
+	 * @param z Zeile fï¿½r Trace Tabelle
 	 */
 
 	private void addTrace(String z) {
@@ -32,9 +32,9 @@ public class GJA {
 	}
 
 	/**
-	 * Fügt der Trace Tabelle eine Zeile hinzu.
+	 * Fï¿½gt der Trace Tabelle eine Zeile hinzu.
 	 * 
-	 * @param z Zeile für Trace Tabelle
+	 * @param z Zeile fï¿½r Trace Tabelle
 	 */
 
 	private void addTraceNl(String z) {
@@ -42,7 +42,7 @@ public class GJA {
 	}
 
 	/**
-	 * Fügt der Trace Tabelle eine Textdarstellung einer EKM zu.
+	 * Fï¿½gt der Trace Tabelle eine Textdarstellung einer EKM zu.
 	 * 
 	 * @param m EKM
 	 */
@@ -59,7 +59,7 @@ public class GJA {
 	}
 
 	/**
-	 * Fügt der Trace Tabelle ein Trennzeichen zu.
+	 * Fï¿½gt der Trace Tabelle ein Trennzeichen zu.
 	 * 
 	 * @param m EKM
 	 */
@@ -316,7 +316,7 @@ public class GJA {
 	}
 
 	/**
-	 * Kombiniert Zeile mit allen Nachfolger- oder Vorgängerzeilen
+	 * Kombiniert Zeile mit allen Nachfolger- oder Vorgï¿½ngerzeilen
 	 * 
 	 * @param m   EKM
 	 * @param idx Index der Zeile
@@ -400,7 +400,7 @@ public class GJA {
 	 */
 
 	public boolean checkTri(double[][] m) {
-		int h = m.length; // Höhe KM
+		int h = m.length; // Hï¿½he KM
 		int b = m[0].length - 1; // Breite KM
 		int n = 0;
 		for (int i = 0; i < h; i++) {
@@ -436,7 +436,7 @@ public class GJA {
 	 */
 
 	public boolean checkDiag(double[][] m) {
-		int h = m.length; // Höhe KM
+		int h = m.length; // Hï¿½he KM
 		int b = m[0].length - 1; // Breite KM
 		int n = (b - 1);
 
@@ -489,7 +489,7 @@ public class GJA {
 	}
 
 	/**
-	 * Checkt eine Überbestimme EKM vorliegt
+	 * Checkt eine ï¿½berbestimme EKM vorliegt
 	 * 
 	 * @param m EKM
 	 * @return Ergebnis Ja/Nein
@@ -503,7 +503,7 @@ public class GJA {
 	}
 
 	/**
-	 * Führt den Gauß-Algorithmus zum Lösen von LGS durch.
+	 * Fï¿½hrt den Gauï¿½-Algorithmus zum Lï¿½sen von LGS durch.
 	 * 
 	 * @param m EKM
 	 * @return EKM in Dreiecksform
@@ -563,7 +563,7 @@ public class GJA {
 	}
 
 	/**
-	 * Führt den Gauß-Jordan-Algorithmus zum Lösen von LGS durch.
+	 * Fï¿½hrt den Gauï¿½-Jordan-Algorithmus zum Lï¿½sen von LGS durch.
 	 * 
 	 * @param m EKM
 	 * @return EKM in Diagonalform
@@ -571,7 +571,7 @@ public class GJA {
 	 */
 
 	public double[][] gaussjordanAlg(double[][] m) {
-		m = gaussAlg(m); // Führe Gauss-Alg durch
+		m = gaussAlg(m); // Fï¿½hre Gauss-Alg durch
 		if (m != null) {
 			// Trace Start
 			addTraceL();

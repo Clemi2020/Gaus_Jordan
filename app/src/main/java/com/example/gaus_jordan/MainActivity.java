@@ -22,9 +22,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        getSupportActionBar().setTitle("Gauß-Jordan");
+
         button = findViewById(R.id.button);
-        matrix_cols = findViewById(R.id.editTextNumber);
-        matrix_rows = findViewById(R.id.editTextNumber2);
+        matrix_cols = findViewById(R.id.editTextNumberCols);
+        matrix_rows = findViewById(R.id.editTextNumberRows);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
