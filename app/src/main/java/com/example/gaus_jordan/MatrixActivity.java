@@ -158,7 +158,7 @@ public class MatrixActivity extends AppCompatActivity {
                 editTexts[i][j] = new EditText(this);
                 editTexts[i][j].setId(counter++);
                 editTexts[i][j].setHint("Zahl");
-                editTexts[i][j].setText(Integer.toString(counter));
+                //editTexts[i][j].setText(Integer.toString(counter));
                 editTexts[i][j].setKeyListener(DigitsKeyListener.getInstance("0123456789.-"));
                 editTexts[i][j].setSingleLine();
                 editTexts[i][j].setGravity(Gravity.CENTER);
