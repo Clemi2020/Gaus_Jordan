@@ -1,17 +1,17 @@
-package com.example.gaus_jordan;
+package p;
 
 import java.util.ArrayList;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Die Klasse GJA dient zur LÃ¶sung von linearen Gleichungssystemen (LGS).
- *
- * Dazu stellt die Klasse Funktionen zur DurchfÃ¼hrung des GauÃŸ-Algorithmus und
- * des GauÃŸ-Jordan-Algorithmus sowie weitere Hilfsfunktionen bereit.
- *
+ * Die Klasse GJA dient zur Lösung von linearen Gleichungssystemen (LGS).
+ * 
+ * Dazu stellt die Klasse Funktionen zur Durchführung des Gauß-Algorithmus und
+ * des Gauß-Jordan-Algorithmus sowie weitere Hilfsfunktionen bereit.
+ * 
  * Alle Funktionen verwenden erweiterte Koeffizientenmatrizen (EKM).
- *
+ * 
  * @author Tamim Rahmani, Clemens Richter, Mohammad Danandeh
  * @version 1.0
  * @since 2020.10.18
@@ -20,10 +20,11 @@ import java.math.RoundingMode;
 public class GJA {
 	public String trace = "";
 	int acc = 2;
+
 	/**
-	 * FÃ¼gt der Trace Tabelle Text hinzu.
-	 *
-	 * @param z Zeile fÃ¼r Trace Tabelle
+	 * Fügt der Trace Tabelle Text hinzu.
+	 * 
+	 * @param z Zeile für Trace Tabelle
 	 */
 
 	private void addTrace(String z) {
@@ -31,9 +32,9 @@ public class GJA {
 	}
 
 	/**
-	 * FÃ¼gt der Trace Tabelle eine Zeile hinzu.
-	 *
-	 * @param z Zeile fÃ¼r Trace Tabelle
+	 * Fügt der Trace Tabelle eine Zeile hinzu.
+	 * 
+	 * @param z Zeile für Trace Tabelle
 	 */
 
 	private void addTraceNl(String z) {
@@ -41,8 +42,8 @@ public class GJA {
 	}
 
 	/**
-	 * FÃ¼gt der Trace Tabelle eine Textdarstellung einer EKM zu.
-	 *
+	 * Fügt der Trace Tabelle eine Textdarstellung einer EKM zu.
+	 * 
 	 * @param m EKM
 	 */
 
@@ -58,8 +59,8 @@ public class GJA {
 	}
 
 	/**
-	 * FÃ¼gt der Trace Tabelle ein Trennzeichen zu.
-	 *
+	 * Fügt der Trace Tabelle ein Trennzeichen zu.
+	 * 
 	 * @param m EKM
 	 */
 
@@ -69,7 +70,7 @@ public class GJA {
 
 	/**
 	 * Gibt den Index des ersten Koeffizienten != 0 Gibt -1 bei Nullzeile.
-	 *
+	 * 
 	 * @param m Zeile einer EKM
 	 * @param r Leserichtung. true -> l-r, false -> r-l
 	 * @return Index
@@ -111,10 +112,9 @@ public class GJA {
 	 */
 
 	public double[] normZeile(double[] mz, boolean r) {
-		double d;
 		double nfak = 1 / mz[getOrd(mz, r)]; // Faktor
 		for (int i = 0; i < mz.length; i++) {
-			mz[i] = round((mz[i] * nfak), acc);
+			mz[i] = round((mz[i] * nfak), 12);
 		}
 		return mz;
 	}
@@ -144,7 +144,7 @@ public class GJA {
 
 	/**
 	 * Checkt ob zwei EKM Zeilen gleich sind bis zu gegebenen Idx
-	 *
+	 * 
 	 * @param m EKM
 	 * @return Ergebnis
 	 */
@@ -165,8 +165,8 @@ public class GJA {
 	/**
 	 * Checkt ob ein Widerspruch im LGS vorliegt. LGS muss vorher normiert und
 	 * sortiert sein! Nutze sonst checkWid()!
-	 *
-	 *
+	 * 
+	 * 
 	 * @param m EKM
 	 * @return Ergebnis
 	 */
@@ -209,7 +209,7 @@ public class GJA {
 
 	/**
 	 * Checkt ob ein Widerspruch im LGS vorliegt.
-	 *
+	 * 
 	 * @param m EKM
 	 * @return Ergebnis
 	 */
@@ -224,7 +224,7 @@ public class GJA {
 
 	/**
 	 * Entfernt Doppelte EKM Zeilen
-	 *
+	 * 
 	 * @param m EKM
 	 * @return Ergebnis
 	 */
@@ -247,9 +247,6 @@ public class GJA {
 				mList.add(m[i]);
 			}
 		}
-		if (h == mList.size()) {
-			mList.remove(mList.size() - 1);
-		}
 		double[][] res = new double[mList.size()][m[0].length];
 		for (int i = 0; i < mList.size(); i++) {
 			res[i] = mList.get(i);
@@ -267,7 +264,7 @@ public class GJA {
 
 	/**
 	 * Entfernt Nullzeilen
-	 *
+	 * 
 	 * @param m EKM
 	 * @return Ergebnis
 	 */
@@ -303,7 +300,7 @@ public class GJA {
 
 	/**
 	 * Kombiniert Zwei Zeilen einer EKM.
-	 *
+	 * 
 	 * @param z1 Zeile der EKM
 	 * @param z2 Zeile der EKM
 	 * @return Kombinierte Zeile
@@ -319,8 +316,8 @@ public class GJA {
 	}
 
 	/**
-	 * Kombiniert Zeile mit allen Nachfolger- oder VorgÃ¤ngerzeilen
-	 *
+	 * Kombiniert Zeile mit allen Nachfolger- oder Vorgängerzeilen
+	 * 
 	 * @param m   EKM
 	 * @param idx Index der Zeile
 	 * @param r   Richtung. true -> o-u, false -> u-o
@@ -394,29 +391,35 @@ public class GJA {
 
 	/**
 	 * Checkt ob eine dreieckige EKM vorliegt.
-	 *
+	 * 
 	 * 1 k2 k1 | d 0 1 k1 | d 0 0 1 | d -> Dreieckige EKM
-	 *
+	 * 
 	 * @param m EKM
 	 * @return Ergebnis Ja/Nein
 	 * @see https://www.mathebibel.de/gauss-algorithmus
 	 */
 
 	public boolean checkTri(double[][] m) {
-		int h = m.length; // HÃ¶he KM
+		int h = m.length; // Höhe KM
 		int b = m[0].length - 1; // Breite KM
-		if (h == b) {
-			for (int i = 0; i < h; i++) {
-				for (int k = 0; k < i; k++) {
+		int n = 0;
+		for (int i = 0; i < h; i++) {
+			for (int k = 0; k < b; k++) {
+				if (m[i][k] == 1) {
+					if (k < n) {
+						return false;
+					} else {
+						n = k;
+						break;
+					}
+				} else {
 					if (m[i][k] != 0) {
 						return false;
 					}
 				}
-				if (m[i][i] != 1) {
-					return false;
-				}
 			}
-		} else {
+		}
+		if (n != (b - 1)) {
 			return false;
 		}
 		return true;
@@ -424,24 +427,38 @@ public class GJA {
 
 	/**
 	 * Checkt ob eine diagonale EKM vorliegt.
-	 *
+	 * 
 	 * 1 0 0 | d 0 1 0 | d 0 0 1 | d -> Diagonale EKM
-	 *
+	 * 
 	 * @param m EKM
 	 * @return Ergebnis Ja/Nein
 	 * @see https://www.mathebibel.de/gauss-algorithmus
 	 */
 
 	public boolean checkDiag(double[][] m) {
-		int h = m.length; // HÃ¶he KM
+		int h = m.length; // Höhe KM
 		int b = m[0].length - 1; // Breite KM
-		if (checkTri(m)) { // PrÃ¼fe ob Dreiecksform vorliegt
-			for (int i = 0; i < h; i++) {
-				for (int k = (i + 1); k < b; k++) {
-					if (m[i][k] != 0) {
-						return false;
+		int n = (b - 1);
+
+		if (checkTri(m)) {
+			for (int i = (h - 1); i >= 0; i--) {
+				for (int k = (b - 1); k >= 0; k--) {
+					if (m[i][k] == 1) {
+						if (k > n) {
+							return false;
+						} else {
+							n = k;
+							break;
+						}
+					} else {
+						if (m[i][k] != 0) {
+							return false;
+						}
 					}
 				}
+			}
+			if (n != 0) {
+				return false;
 			}
 		} else {
 			return false;
@@ -451,7 +468,7 @@ public class GJA {
 
 	/**
 	 * Checkt eine Unterbestimme EKM vorliegt
-	 *
+	 * 
 	 * @param m EKM
 	 * @return Ergebnis Ja/Nein
 	 */
@@ -472,8 +489,8 @@ public class GJA {
 	}
 
 	/**
-	 * Checkt eine Ãœberbestimme EKM vorliegt
-	 *
+	 * Checkt eine Überbestimme EKM vorliegt
+	 * 
 	 * @param m EKM
 	 * @return Ergebnis Ja/Nein
 	 */
@@ -486,8 +503,8 @@ public class GJA {
 	}
 
 	/**
-	 * FÃ¼hrt den GauÃŸ-Algorithmus zum LÃ¶sen von LGS durch.
-	 *
+	 * Führt den Gauß-Algorithmus zum Lösen von LGS durch.
+	 * 
 	 * @param m EKM
 	 * @return EKM in Dreiecksform
 	 * @see https://www.mathebibel.de/gauss-algorithmus
@@ -508,6 +525,9 @@ public class GJA {
 			if (checkUebEKM(m)) {
 				m = entfDoppel(m);
 				if (checkTri(m)) {
+					if (checkWidRaw(m)) { // Fall Widerspruch
+						return null;
+					}
 					break;
 				}
 			}
@@ -520,6 +540,9 @@ public class GJA {
 			m = normMatrix(m, true); // Normiere
 			m = sortMatrix(m); // Sortiere
 			if (checkTri(m)) {
+				if (checkWidRaw(m)) { // Fall Widerspruch
+					return null;
+				}
 				break;
 			}
 			m = kombMatrix(m, idx, true);
@@ -540,15 +563,15 @@ public class GJA {
 	}
 
 	/**
-	 * FÃ¼hrt den GauÃŸ-Jordan-Algorithmus zum LÃ¶sen von LGS durch.
-	 *
+	 * Führt den Gauß-Jordan-Algorithmus zum Lösen von LGS durch.
+	 * 
 	 * @param m EKM
 	 * @return EKM in Diagonalform
 	 * @see https://www.mathebibel.de/gauss-algorithmus
 	 */
 
 	public double[][] gaussjordanAlg(double[][] m) {
-		m = gaussAlg(m); // FÃ¼hre Gauss-Alg durch
+		m = gaussAlg(m); // Führe Gauss-Alg durch
 		if (m != null) {
 			// Trace Start
 			addTraceL();
@@ -562,6 +585,7 @@ public class GJA {
 				if (checkWidRaw(m)) { // Fall Widerspruch
 					return null;
 				}
+				m = entfNZ(m); // Entferne Nullzeilen
 				m = normMatrix(m, false);
 				m = kombMatrix(m, idx, false);
 				if (idx < 0) {
