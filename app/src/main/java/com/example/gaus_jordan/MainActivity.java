@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             int rows = Integer.parseInt(matrix_rows.getText().toString());
 
             if (cols > 8 || rows > 8){
-                Toast.makeText(getApplicationContext(),"Bruh, viel zu groß die Matrix....",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Viel zu groß die Matrix.... (Max. 8x8)",Toast.LENGTH_SHORT).show();
             }else {
                 intent.putExtra(EXTRA_COLS, cols);
                 intent.putExtra(EXTRA_ROWS, rows);
@@ -51,9 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(),"Du musst schon Zahlen eingeben....",Toast.LENGTH_SHORT).show();
-
-            startActivity(intent);
+            Toast.makeText(getApplicationContext(),"Du musst schon die Größe angeben....",Toast.LENGTH_SHORT).show();
         }
 
     }

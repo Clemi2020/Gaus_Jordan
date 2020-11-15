@@ -105,6 +105,7 @@ public class MatrixActivity extends AppCompatActivity {
         });
     }
 
+    // doning GJA-Alorithm
     private void do_GJA(){
         try{
             double[][] to_solve = getMatrixInput(ID_MATRIX_START);
@@ -174,6 +175,7 @@ public class MatrixActivity extends AppCompatActivity {
         }
     }
 
+    //creating the Result matrix als editTextFields
     private void createMatrixSolvedLayout(GridLayout gridLayoutMatrix, int counter_start){
         int counter = counter_start;
         int max_rows = rowNum;
@@ -201,7 +203,7 @@ public class MatrixActivity extends AppCompatActivity {
         }
     }
 
-
+    //putting values into the matrix
     private void setSolvedMatrix(double[][] matrix_solved){
         int counter = ID_MATRIX_SOLVED_START;
         int max_rows = rowNum;
@@ -217,6 +219,7 @@ public class MatrixActivity extends AppCompatActivity {
         }
     }
 
+    //reads the user input of the matrix
     public double[][] getMatrixInput(int counter_start){
         int counter = counter_start;
         double[][] to_solve = new double[rowNum][colNum];
